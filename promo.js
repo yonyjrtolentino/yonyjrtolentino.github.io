@@ -64,6 +64,14 @@
     Array.prototype.forEach.call(document.querySelectorAll(".vu"), function (el) { vuIO.observe(el); });
   }
 
+  /* ---------- redes: entra al verse y solo se anima mientras está en pantalla ---------- */
+  var soc = document.querySelector(".social");
+  if (soc && "IntersectionObserver" in window) {
+    new IntersectionObserver(function (es) {
+      es.forEach(function (e) { soc.classList.toggle("on", e.isIntersecting && FX); if (e.isIntersecting) soc.classList.add("seen"); });
+    }, { threshold: 0.12 }).observe(soc);
+  } else if (soc) soc.classList.add("seen");
+
   var top = document.querySelector(".top"), bar = document.querySelector(".progress i");
   function chrome(y) {
     var max = Math.max(1, document.documentElement.scrollHeight - vh);
